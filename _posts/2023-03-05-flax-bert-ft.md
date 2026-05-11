@@ -220,7 +220,7 @@ params = model.init(rng, input_ids, attention_mask)
 
 Unfreeze and Freeze, basically.
 
-![freeze.png](./assets/freeze.png)
+![freeze.png]({{ '/assets/images/posts/freeze.png' | relative_url }})
 
 
 ```python
