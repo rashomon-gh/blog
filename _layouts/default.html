@@ -51,5 +51,33 @@
             ],
             throwOnError: false
         });"></script>
+
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var plotlyBlocks = document.querySelectorAll('.language-plotly');
+            plotlyBlocks.forEach(function(block, index) {
+                if (block.tagName === 'CODE' && block.closest('div.language-plotly')) {
+                    return;
+                }
+                var jsonString = block.textContent;
+                try {
+                    var plotlyData = JSON.parse(jsonString);
+                    var newDiv = document.createElement('div');
+                    newDiv.id = 'plotly-plot-' + index;
+                    newDiv.className = 'plotly-graph-wrapper';
+                    
+                    var wrapper = block.closest('.highlighter-rouge') || block;
+                    wrapper.parentNode.insertBefore(newDiv, wrapper);
+                    wrapper.remove();
+                    
+                    Plotly.newPlot(newDiv.id, plotlyData.data, plotlyData.layout, plotlyData.config);
+                } catch (e) {
+                    console.error("Error parsing Plotly JSON: ", e);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
